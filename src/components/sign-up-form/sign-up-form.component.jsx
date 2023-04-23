@@ -24,7 +24,7 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
 
-    const {setCurrentUser} = useContext(UserContext);
+    //const {setCurrentUser} = useContext(UserContext);
     //console.log(formFields);
 
     const resetFormFields = () => {
@@ -49,10 +49,12 @@ const SignUpForm = () => {
     
         try{
             const {user} = await createAuthUserWithEmailAndPassword(email, password);
-            
-            setCurrentUser(user);
 
-            await createUserDocumentFromAuth(user, {displayName});
+            //setCurrentUser(user);
+
+            // the document would be created here, instead of auth listener (user provider)
+            // because we need extra argument: displayName
+            await createUserDocumentFromAuth(user, {displayName}); 
             resetFormFields();
 
         }catch(error){
