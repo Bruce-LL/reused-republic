@@ -12,7 +12,7 @@ export const UserProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null);
     const value = {currentUser, setCurrentUser};
 
-    useEffect(() => {
+    useEffect(() => {  //hook for side effect, which means it can happen outside this component
         const unsubscribe = onAuthStateChangedListener((user) => {
             if(user){
                 createUserDocumentFromAuth(user); // in this method, the user document will be created only if the this user don't exist yet on database
