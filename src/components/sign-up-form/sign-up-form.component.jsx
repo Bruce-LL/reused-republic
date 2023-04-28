@@ -53,7 +53,7 @@ const SignUpForm = () => {
             //setCurrentUser(user);
 
             // the document would be created here, instead of auth listener (user provider)
-            // because we need extra argument: displayName
+            // because we need extra argument: displayName in this case 
             await createUserDocumentFromAuth(user, {displayName}); 
             resetFormFields();
 

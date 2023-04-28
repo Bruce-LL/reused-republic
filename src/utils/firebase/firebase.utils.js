@@ -17,6 +17,10 @@ import {
     doc,
     getDoc,
     setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -42,6 +46,39 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 // export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd, field) => {  // objectsToAdd, refers to the shop-data
+    const collectionRef = collection(db, collectionKey);
+
+    // batch: to upload the entire objectsToAdd to the collection within one transaction
+    const batch = writeBatch(db);  //also can attach read, deleted...
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object);
+    });
+
+    await batch.commit();
+    console.log('done');
+}
+
+//the way of fetching categories from google Firebase varies from version to version
+// don't need to dig deep to understand what it really means here, use just it at this moment
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const {title, items} = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+
+    return categoryMap;
+
+}
+
+
+
 
 // additionalInformation is defaultly an empty object if nothing passed in 
 export const createUserDocumentFromAuth = async (userAuth,
