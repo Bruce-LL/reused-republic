@@ -5,7 +5,8 @@ import {ReactComponent as MITLogo} from '../../assets/MIT_DOME.svg';
 import { signOut } from "firebase/auth";
 
 
-import './navigation.styles.scss';
+//import './navigation.styles.scss';
+import { NavigationContainer, LogoContainer, NavLinks, NavLink } from "./navigation.styles";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
@@ -28,26 +29,26 @@ const Navigation = () => {
   //console.log(currentUser);
   return (
     <Fragment>
-      <div className="navigation">
-          <Link className="logo-container" to='/'>
+      <NavigationContainer>
+          <LogoContainer to='/'>
               <CrwnLogo className='logo'/>
-          </Link>
-          <div className="nav-links-container">
-              <Link className="nav-link" to='shop'>
+          </LogoContainer>
+          <NavLinks>
+              <NavLink to='shop'>
                 <div>SHOP</div> 
-              </Link>
+              </NavLink>
               {  // if currentUser has been setup in the context, than show a SIGNOUT button(span)
-                currentUser ? (<span className="nav-link" onClick={signOutUser}>SIGN OUT</span>)
-                            : (<Link className="nav-link" to='auth'>
+                currentUser ? (<NavLink as='span' onClick={signOutUser}>SIGN OUT</NavLink>)
+                            : (<NavLink to='auth'>
                                   <div>SIGNIN</div>
-                               </Link>)
+                               </NavLink>)
               }
               <CartIcon />
               
               
-          </div>
+          </NavLinks>
           {isCartOpen && <CartDropdown />} 
-      </div>
+      </NavigationContainer>
       <Outlet />
     </Fragment>
   );

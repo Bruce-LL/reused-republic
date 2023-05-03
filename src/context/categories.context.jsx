@@ -22,7 +22,7 @@ export const CategoriesProvider = (({children}) => {
         const getCategoriesMap = async () => { //this is the way to call an async funcion in useEffect
             //console.log('useEffect here00!');
             const categoryMap = await getCategoriesAndDocuments();
-            console.log(categoryMap);
+            // console.log(categoryMap);
             setCategoriesMap(categoryMap);
         }
         //console.log('useEffect here!');

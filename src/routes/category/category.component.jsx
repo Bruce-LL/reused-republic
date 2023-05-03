@@ -1,4 +1,4 @@
-import { useContext, useState,useEffect } from 'react';
+import { useContext, useState,useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { CategoriesContext } from '../../context/categories.context';
 import './category.styles.scss';
@@ -14,11 +14,15 @@ const Category = () => {
    }, [category, categoriesMap])
    //const products = categoriesMap[category];
    return (
-    <div className='category-container'> 
+    <Fragment>
+        <h2 className='category-title'>{category.toUpperCase()}</h2>
+        <div className='category-container'> 
         {  products && //if products is undefined, don't render it
             products.map((product) => (<ProductCard key={product.id} product={product}/>))
         }
     </div>
+    </Fragment>
+    
    )
 }
 
